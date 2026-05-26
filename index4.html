@@ -287,6 +287,24 @@
         .timeline-item.start .timeline-text, .timeline-item.end .timeline-text { font-weight: 700; color: #111; }
         .timeline-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 1px; }
 
+		/* 지도 아이콘 스타일 */
+		.map-link {
+			margin-left: 8px; /* 텍스트와 핀 아이콘 사이의 간격 (px 단위로 조절 가능) */
+			text-decoration: none; /* 밑줄 제거 */
+			font-size: 0.9rem;
+			transition: transform 0.2s;
+			display: inline-block;
+		}
+
+		/* 마우스를 올렸을 때 살짝 커지는 효과 */
+		.map-link:hover {
+			transform: scale(1.2);
+		}
+
+		/* 색상 필터 추가 */
+		.map-red { filter: hue-rotate(0deg) brightness(100%); }
+		.map-blue { filter: hue-rotate(200deg) brightness(120%); }
+
         /* 시간표 그리드 */
         .time-grid {
             display: grid;
@@ -531,55 +549,59 @@
                     <div class="timeline">
                         <div class="timeline-item start">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">한양마트</span><span class="en">Hanyang Mart / 汉亚超市</span></div>
+                            <div class="timeline-text"><span class="ko">한양마트<a href="https://maps.app.goo.gl/vm19J8TherhxhKoj8" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Hanyang Mart / 汉亚超市</span></div>
                             <div class="timeline-sub">150-29 Northern Blvd</div>
                         </div>
                         <!--div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">147th St</div></div-->
                         <div class="timeline-item">
 							<div class="timeline-badge"></div>
-							<div class="timeline-text">Bowne St</div>
+							<div class="timeline-text">Bowne St<a href="https://maps.app.goo.gl/iAD97SdwL8TCRjCSA" target="_blank" class="map-link map-blue">📍</a></div>
 							<div class="timeline-sub">Bowne St @ Northern Blvd</div>
 						</div>
                         <div class="timeline-item">
 							<div class="timeline-badge"></div>
-							<div class="timeline-text">Linden Pl (Flushing Main St)</div>
+							<div class="timeline-text">Linden Pl (Flushing Main St)<a href="https://maps.app.goo.gl/NzmhuzrFBF8jjRMv7" target="_blank" class="map-link map-blue">📍</a></div>
 							<div class="timeline-sub">Linden Pl @ Northern Blvd</div>
 						</div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">포트리 브릿지 플라자</span><span class="en">GWB / 乔治·华盛顿大桥</span></div>
+                            <div class="timeline-text"><span class="ko">포트리 브릿지 플라자<a href="https://maps.app.goo.gl/98eGfe33k6AS7Npa8" target="_blank" class="map-link">📍</a></span><span class="en">GWB / 乔治·华盛顿大桥</span></div>
                             <div class="timeline-sub">Center Ave @ Bridge Plz N</div>
                         </div>
-                        <!--div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">Fort Lee Main St & Linwood Ave</div></div-->
-                        <div class="timeline-item">
-                            <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">포트리 감미옥</span><span class="en">Fort Lee Gammeeok / 甘味屋</span></div>
-                            <div class="timeline-sub">485 Main St</div>
-                        </div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text"><span class="ko">한남마트</span><span class="en">Hannam Mart</span><span class="zh">韓南超市</span></div></div>
                         <div class="timeline-item">
 							<div class="timeline-badge"></div>
-							<div class="timeline-text"><span class="ko">팰팍 5가</span><span class="en">Palisades Park Fifth St / 第五街</span></div>
+							<div class="timeline-text"><span class="ko">포트리 메인스트리트<a href="https://maps.app.goo.gl/8F9M5zTfyGMX1CwVA" target="_blank" class="map-link">📍</a></span><span class="en">Fort Lee Main St / 李堡缅街</span></div>
+							<div class="timeline-sub">Linwood Ave @ Main St</div>
+						</div>
+                        <div class="timeline-item">
+                            <div class="timeline-badge"></div>
+                            <div class="timeline-text"><span class="ko">포트리 감미옥<a href="https://maps.app.goo.gl/Znntct8XFDcuRB2A6" target="_blank" class="map-link">📍</a></span><span class="en">Fort Lee Gammeeok / 甘味屋</span></div>
+                            <div class="timeline-sub">485 Main St</div>
+                        </div>
+                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text"><span class="ko">한남마트<a href="https://maps.app.goo.gl/Ftbzntts44TPR2tB7" target="_blank" class="map-link">📍</a></span><span class="en">Hannam Mart</span><span class="zh">韓南超市</span></div></div>
+                        <div class="timeline-item">
+							<div class="timeline-badge"></div>
+							<div class="timeline-text"><span class="ko">팰팍 5가<a href="https://maps.app.goo.gl/xBk1adTz7M3hfKam7" target="_blank" class="map-link">📍</a></span><span class="en">Palisades Park Fifth St / 第五街</span></div>
 							<div class="timeline-sub">Fifth St @ E Palisades Blvd</div>
 						</div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">팰팍 4거리(United Healthcare)</span><span class="en">Broad Ave 4-Way / 帕利塞兹公园路口</span></div>
+                            <div class="timeline-text"><span class="ko">팰팍 4거리(United Healthcare)<a href="https://maps.app.goo.gl/RTcXCRitA55LURtp6" target="_blank" class="map-link">📍</a></span><span class="en">Broad Ave 4-Way / 帕利塞兹公园路口</span></div>
                             <div class="timeline-sub">E Palisades Blvd @ Broad Ave</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">팰팍 경찰서</span><span class="en">Palisades Park Police Dept / 帕利塞茲公園警察局</span></div>
+                            <div class="timeline-text"><span class="ko">팰팍 경찰서<a href="https://maps.app.goo.gl/iigesEda5GzfZ46J9" target="_blank" class="map-link">📍</a></span><span class="en">Palisades Park Police Dept / 帕利塞茲公園警察局</span></div>
                             <div class="timeline-sub">Central Blvd @ Broad Ave</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">신한은행</span><span class="en">Shinhan Bank / 新韩银行</span></div>
+                            <div class="timeline-text"><span class="ko">신한은행<a href="https://maps.app.goo.gl/QDiNpfpmSyLQ1NsW7" target="_blank" class="map-link">📍</a></span><span class="en">Shinhan Bank / 新韩银行</span></div>
                             <div class="timeline-sub">Edsall Ave @ Broad Ave</div>
                         </div>
                         <div class="timeline-item end">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">킹스파</span><span class="en">King Sauna / 帝王桑拿</span></div>
+                            <div class="timeline-text"><span class="ko">킹스파<a href="https://maps.app.goo.gl/v3eokHYPRWMNQnQZ9" target="_blank" class="map-link">📍</a></span><span class="en">King Sauna / 帝王桑拿</span></div>
                             <div class="timeline-sub">321 Commercial Ave</div>
                         </div>
                     </div>
@@ -605,46 +627,46 @@
                     <div class="timeline">
                         <div class="timeline-item start">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">킹스파</span><span class="en">King Sauna / 帝王桑拿</span></div>
+                            <div class="timeline-text"><span class="ko">킹스파<a href="https://maps.app.goo.gl/v3eokHYPRWMNQnQZ9" target="_blank" class="map-link map-blue">📍</a></span><span class="en">King Sauna / 帝王桑拿</span></div>
                             <div class="timeline-sub">321 Commercial Ave</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">아비코</span><span class="en">Abiko Curry / 阿比古咖喱</span></div>
+                            <div class="timeline-text"><span class="ko">아비코<a href="https://maps.app.goo.gl/YjHTrjre6bCpaPL49" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Abiko Curry / 阿比古咖喱</span></div>
                             <div class="timeline-sub">108 Broad Ave / Edsall Ave @ Broad Ave</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">제이씨델리</span><span class="en">JC Deli & Liquor / JC熟食酒舖</span></div>
+                            <div class="timeline-text"><span class="ko">제이씨델리<a href="https://maps.app.goo.gl/cff6GXG1aVWf3KWm7" target="_blank" class="map-link map-blue">📍</a></span><span class="en">JC Deli & Liquor / JC熟食酒舖</span></div>
                             <div class="timeline-sub">246 Broad Ave / Brinkerhoff Ave @ Broad Ave</div>
                         </div>
                         <div class="timeline-item"><div class="timeline-badge"></div>
-							<div class="timeline-text"><span class="ko">팰팍 4거리(United Healthcare)</span><span class="en">Broad Ave 4-Way / 帕利塞兹公园路口</span></div>
+							<div class="timeline-text"><span class="ko">팰팍 4거리(United Healthcare)<a href="https://maps.app.goo.gl/8ADShVKuHdDYSnfZ7" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Broad Ave 4-Way / 帕利塞兹公园路口</span></div>
 							<div class="timeline-sub">350 Broad Ave / E Palisades Blvd @ Broad Ave</div>
 						</div>
                         <div class="timeline-item">
 							<div class="timeline-badge"></div>
-							<div class="timeline-text"><span class="ko">팰팍 6가</span><span class="en">Palisades Park 6th St / 第六街</span></div>
+							<div class="timeline-text"><span class="ko">팰팍 6가<a href="https://maps.app.goo.gl/A4JajvsxhSn81rFc7" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Palisades Park 6th St / 第六街</span></div>
 							<div class="timeline-sub">6th St @ E Palisades Blvd</div>
 						</div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">포트리 감미옥</span><span class="en">Fort Lee Gammeeok / 甘味屋</span></div>
+                            <div class="timeline-text"><span class="ko">포트리 감미옥<a href="https://maps.app.goo.gl/e2JUy22wPhqDeAnw8" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Fort Lee Gammeeok / 甘味屋</span></div>
                             <div class="timeline-sub">492 Main St</div>
                         </div>
                         <div class="timeline-item">
 							<div class="timeline-badge"></div>
-							<div class="timeline-text"><span class="ko">Flushing Main St</span><span class="en">法拉盛缅街</span></div>
+							<div class="timeline-text"><span class="ko">Flushing Main St<a href="https://maps.app.goo.gl/CNUavZgYuDYyjgRt5" target="_blank" class="map-link">📍</a></span><span class="en">法拉盛缅街</span></div>
 							<div class="timeline-sub">137 Northern Blvd</div>
 						</div>
                         <div class="timeline-item">
 							<div class="timeline-badge"></div>
-							<div class="timeline-text"><span class="ko">Flushing Bowne St</span><span class="en">法拉盛宝恩街</span></div>
+							<div class="timeline-text"><span class="ko">Flushing Bowne St<a href="https://maps.app.goo.gl/EFEkh1mXAz1WEapJ6" target="_blank" class="map-link">📍</a></span><span class="en">法拉盛宝恩街</span></div>
 							<div class="timeline-sub">Bowne St @ Northern Blvd</div>
 						</div>
                         <div class="timeline-item end">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">한양마트</span><span class="en">Hanyang Mart / 汉亚超市</span></div>
+                            <div class="timeline-text"><span class="ko">한양마트<a href="https://maps.app.goo.gl/4TGkPpgtQ8FHL8gX9" target="_blank" class="map-link">📍</a></span><span class="en">Hanyang Mart / 汉亚超市</span></div>
                             <div class="timeline-sub">150 Northern Blvd</div>
                         </div>
                     </div>
