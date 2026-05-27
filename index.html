@@ -6,7 +6,7 @@
     <title>KTA BUS - NY/NJ Shuttle Bus</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght=300;400;500;700&family=Noto+Sans+SC:wght=300;400;500;700&display=swap" rel="stylesheet">
     
     <style>
         /* 기본 테마 및 색상 설정 */
@@ -43,27 +43,34 @@
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            /*justify-content: space-between;*/
             align-items: center;
         }
 
+        /* 로고 다국어 수직 정렬 */
         .logo {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
             letter-spacing: -0.5px;
         }
-
-        .lang-select {
-            padding: 6px 10px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            outline: none;
+        .logo .ko {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-color);
         }
+        .logo .en, .logo .zh {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+		.logo-img {
+			height: 40px;      /* 로고의 높이를 헤더 높이에 맞게 조절 */
+			width: auto;       /* 비율을 유지하며 가로 크기 자동 조정 */
+			display: block;    /* 레이아웃 여백 방지 */
+		}
 
         /* 📱 모바일 기본 메인 레이아웃 */
         .container {
@@ -94,47 +101,32 @@
             font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
             color: #111;
         }
 
-        /* 🚐 1. 서비스 안내 카드 - 흐린 막을 걷어내고 원본 이미지 그대로 쨍하게 노출 */
-        .features-section {
-            position: relative;
-            background-image: url('bus.png'); /* 내 컴퓨터에 저장된 15인승 밴 파일명 */
-            background-size: cover;
-            background-position: center;
-            overflow: hidden;
-            border: 1px solid #DFE3E6;
-            min-height: 380px; /* 모바일에서 이미지가 시원하게 보이도록 높이 확보 */
+
+
+		/* 🚐 [해결] 1. 서비스 안내 및 차량 사진 분리 레이아웃 */
+        .intro-wrapper {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 16px;
         }
 
-        .features-section h2 {
-            color: #111;
-            background-color: rgba(255, 255, 255, 0.85); /* 모바일 타이틀 가독성용 바 */
-            padding: 8px 12px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-self: flex-start;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        .features-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
-        /* 서비스 장점 글자 박스 - 여백을 줄이고 모바일에서 차량 하단에 얹히도록 조정 */
         .feature-single-box {
-            background-color: rgba(255, 255, 255, 0.92); /* 텍스트 영역만 꽉 찬 반투명으로 */
-            padding: 16px;
+            background-color: #F8F9FA;
+            padding: 18px;
             border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            font-size: 0.92rem;
             color: #2b303a;
-            line-height: 1.65;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-top: auto; /* 아래쪽으로 밀착 */
+            line-height: 1.7;
         }
 
         .feature-single-box strong {
@@ -142,6 +134,24 @@
             font-weight: 700;
         }
 
+        /* 독립된 차량 사진 카드 */
+        .bus-image-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bus-image-card img {
+            width: 100%;
+            height: auto;
+            max-height: 350px;
+            object-fit: cover;
+            display: block;
+        }
         /* 🗺️ 2. 상단 노선 요약 맵 */
         .route-map-card {
             background: linear-gradient(135deg, #0f52ba, #1e3c72);
@@ -155,14 +165,11 @@
             font-size: 1.15rem;
             font-weight: 700;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .route-visual {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             position: relative;
             padding: 10px 0;
@@ -173,7 +180,7 @@
             position: absolute;
             left: 10%;
             right: 10%;
-            top: 35px;
+            top: 20px;
             height: 4px;
             background: rgba(255, 255, 255, 0.25);
             z-index: 1;
@@ -183,7 +190,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 30%;
+            width: 32%;
             z-index: 2;
             text-align: center;
         }
@@ -199,12 +206,12 @@
         }
 
         .node-dot.express { border-color: #f59e0b; }
-        .node-name { font-size: 0.9rem; font-weight: 700; }
-        .node-region { font-size: 0.72rem; opacity: 0.8; margin-top: 2px; }
+        .node-name { font-size: 0.88rem; font-weight: 700; width: 100%; }
+        .node-region { font-size: 0.72rem; opacity: 0.8; margin-top: 2px; font-weight: bold; color: #fff; }
 
         .route-arrow {
             position: absolute;
-            top: 23px;
+            top: 8px;
             font-size: 0.85rem;
             opacity: 0.6;
             animation: pulse 2s infinite;
@@ -259,7 +266,7 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: 12px;
+            margin-bottom: 18px;
             font-size: 0.88rem;
         }
 
@@ -267,18 +274,36 @@
         .timeline-badge {
             position: absolute;
             left: -26px;
-            top: 4px;
+            top: 6px;
             width: 10px;
             height: 10px;
             border-radius: 50%;
             background-color: #adb5bd;
         }
 
-        .timeline-item.start .timeline-badge { background-color: var(--primary-color); width: 12px; height: 12px; left: -27px; }
-        .timeline-item.end .timeline-badge { background-color: var(--accent-color); width: 12px; height: 12px; left: -27px; }
+        .timeline-item.start .timeline-badge { background-color: var(--primary-color); width: 12px; height: 12px; left: -27px; top: 6px; }
+        .timeline-item.end .timeline-badge { background-color: var(--accent-color); width: 12px; height: 12px; left: -27px; top: 6px; }
         .timeline-text { font-weight: 500; }
         .timeline-item.start .timeline-text, .timeline-item.end .timeline-text { font-weight: 700; color: #111; }
         .timeline-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 1px; }
+
+		/* 지도 아이콘 스타일 */
+		.map-link {
+			margin-left: 8px; /* 텍스트와 핀 아이콘 사이의 간격 (px 단위로 조절 가능) */
+			text-decoration: none; /* 밑줄 제거 */
+			font-size: 0.9rem;
+			transition: transform 0.2s;
+			display: inline-block;
+		}
+
+		/* 마우스를 올렸을 때 살짝 커지는 효과 */
+		.map-link:hover {
+			transform: scale(1.2);
+		}
+
+		/* 색상 필터 추가 */
+		.map-red { filter: hue-rotate(0deg) brightness(100%); }
+		.map-blue { filter: hue-rotate(200deg) brightness(120%); }
 
         /* 시간표 그리드 */
         .time-grid {
@@ -305,28 +330,27 @@
             color: var(--text-main);
         }
 
+        /* 주말 미운행 시간표 다국어 통합 노출 */
         .time-slot.holiday-off {
             border: 1px solid var(--accent-color);
             background-color: #FFF5F5;
-            padding-bottom: 22px;
+            padding-bottom: 44px;
         }
 
         .time-slot.holiday-off::after {
+            content: '토·일·공휴일 미운행\ANo Bus on Sat/Sun/Hols\A周六/周日/节假日不运营';
+            white-space: pre-line;
+            line-height: 1.2;
             position: absolute;
-            bottom: 4px;
+            bottom: 3px;
             left: 0;
             right: 0;
-            font-size: 0.58rem;
+            font-size: 0.55rem;
             font-weight: 500;
             color: var(--accent-color);
             display: block;
             text-align: center;
-            white-space: nowrap;
         }
-
-        [data-lang="ko"] .time-slot.holiday-off::after { content: '토·일·공휴일 미운행'; }
-        [data-lang="en"] .time-slot.holiday-off::after { content: 'No Bus on Sat/Sun/Holidays'; }
-        [data-lang="zh"] .time-slot.holiday-off::after { content: '周六/周日/节假日不运营'; }
         .time-slot.empty { display: none; }
 
         /* 종이 시간표 뷰어 */
@@ -360,38 +384,57 @@
             border-radius: 8px;
             border-left: 4px solid var(--primary-color);
         }
-        .rate-name { font-weight: 500; font-size: 0.9rem; color: var(--text-main); }
+        .rate-name { font-weight: 500; font-size: 0.9rem; color: var(--text-main); width: 70%; }
         .rate-price { font-size: 1rem; font-weight: 700; color: var(--primary-color); }
-        .rate-notice { margin-top: 10px; font-size: 0.78rem; line-height: 1.5; color: #E03131; font-weight: 500; }
-        .rate-notice p { margin-bottom: 4px; }
+        .rate-notice { margin-top: 10px; font-size: 0.78rem; line-height: 1.6; color: #E03131; font-weight: 500; }
+        .rate-notice p { margin-bottom: 10px; }
         .rate-notice p:last-child { margin-bottom: 0; }
 
         /* 연락처 및 안내 */
         .info-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             padding: 10px 0;
             border-bottom: 1px solid var(--border-color);
         }
         .info-row:last-child { border-bottom: none; }
-        .info-label { font-size: 0.85rem; color: var(--text-muted); }
-        .info-value { font-size: 0.9rem; font-weight: 500; color: var(--text-main); }
+        .info-label { font-size: 0.85rem; color: var(--text-muted); width: 40%; }
+        .info-value { font-size: 0.9rem; font-weight: 500; color: var(--text-main); text-align: right; }
         .btn-link { color: var(--primary-color); text-decoration: none; font-weight: 700; }
 
         footer { text-align: center; padding: 24px 20px; font-size: 0.75rem; color: var(--text-muted); margin-top: 24px; }
 
-        /* 다국어 숨김/개방 조건 */
-        .en, .zh { display: none; }
-        body[data-lang="ko"] .ko { display: inline-block; }
-        body[data-lang="ko"] .en, body[data-lang="ko"] .zh { display: none; }
-        body[data-lang="en"] .en { display: inline-block; }
-        body[data-lang="en"] .ko, body[data-lang="en"] .zh { display: none; }
-        body[data-lang="zh"] .zh { display: inline-block; }
-        body[data-lang="zh"] .ko, body[data-lang="zh"] .en { display: none; }
+        /* =======================================================
+           🌐 다국어 동시 노출 핵심 스타일 (계층 구조화)
+           ======================================================= */
+        .ko {
+            display: inline;
+        }
+        .en {
+            display: block;
+            color: #495057;
+            font-size: 0.88em;
+            font-weight: 400;
+            margin-top: 3px;
+        }
+        .zh {
+            display: block;
+            color: #6c757d;
+            font-size: 0.82em;
+            font-weight: 400;
+            margin-top: 1px;
+        }
+
+        /* 특수 구역 스타일 조정 */
+        h2 .en, h2 .zh, .route-map-title .en, .route-map-title .zh {
+            font-weight: 500;
+        }
+        .route-map-card .en { color: #e9ecef; }
+        .route-map-card .zh { color: #dee2e6; }
 
         /* =======================================================
-           💻 컴퓨터(PC) 화면용 분할 레이아웃 적용 (차량 무가림 최적화)
+           💻 컴퓨터(PC) 화면용 분할 레이아웃 적용
            ======================================================= */
         @media (min-width: 900px) {
             .container {
@@ -402,34 +445,21 @@
                 padding: 24px;
             }
 
-            .features-section, .route-map-card { grid-column: span 2; }
+            /* [해결] 상단 안내 박스와 차량 이미지를 가로로 나란히 배치 */
+            .intro-wrapper {
+                grid-column: span 2;
+                display: grid;
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 24px;
+            }
+
+            .route-map-card { grid-column: span 2; }
             .main-content, .side-content { gap: 24px; }
             .section-card { padding: 26px; }
 
-            /* PC 레이아웃: 왼쪽 텍스트 박스 고정, 오른쪽 영역전체를 밴 차량 단독 뷰로 할당 */
-            .features-section {
-                display: grid;
-                grid-template-columns: 480px 1fr; /* 글자구역 480px 고정, 오른쪽은 순수 이미지 영역 */
-                background-position: right center; /* 차량 중심인 오른쪽 위주로 정렬 */
-                min-height: 340px;
-                padding: 0;
-                background-color: #fafafa;
-            }
-
-            .features-section h2 {
-                grid-column: 1;
-                margin: 24px 0 0 24px;
-                background: none;
-                box-shadow: none;
-                padding: 0;
-            }
-
-            .feature-single-box {
-                grid-column: 1;
-                margin: 0 0 24px 24px;
-                background-color: rgba(255, 255, 255, 0.96);
-                box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-                border: 1px solid var(--border-color);
+            .bus-image-card img {
+                height: 100%;
+                max-height: 100%;
             }
 
             .time-grid {
@@ -438,31 +468,25 @@
         }
     </style>
 </head>
-<body data-lang="ko">
+<body>
 
     <header>
-        <div class="logo">
-            <span class="ko">🚌 KTA BUS (코리아나 관광)</span>
-            <span class="en">🚌 KTA BUS Line</span>
-            <span class="zh">🚌 KTA 巴士</span>
+        <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+			<img src="kta_logo.png" alt="Logo" class="logo-img"><span>KTA BUS</span>
         </div>
-        <select id="langSelect" class="lang-select" onchange="changeLanguage(this.value)">
-            <option value="ko">한국어</option>
-            <option value="en">English</option>
-            <option value="zh">简体中文</option>
-        </select>
     </header>
 
     <div class="container">
 
-        <div class="section-card features-section">
-            <h2>⭐ 
-                <span class="ko">KTA BUS 서비스 안내</span>
-                <span class="en">Service Information</span>
-                <span class="zh">服务指南</span>
-            </h2>
-            <div class="feature-single-box">
-                <span class="ko">
+<!-- [수정 구역] 회사소개와 이미지가 절대 겹치지 않는 묶음 래퍼 -->
+        <div class="intro-wrapper">
+            <!-- 왼쪽/위: 회사 소개 카드 -->
+            <div class="section-card features-section">
+                <h2>⭐ 
+                    <span class="ko">NY/NJ Shuttle Bus Information</span>
+                </h2>
+                <div class="feature-single-box">
+                    <span class="ko">
                     KTA BUS는 <strong>코리아나여행사에서 운영하는 셔틀버스</strong>로, 뉴욕 플러싱과 뉴저지 포트리, 팰팍(킹스파) 등 <strong>핵심 거점을 직행으로 연결</strong>합니다. 철저한 시간 관리를 통해 <strong>정시 운행을 보장</strong>하며, 상시 청결하게 관리된 차량으로 목적지까지 <strong>편안하고 안전한 이동</strong>을 선사합니다.
                 </span>
                 <span class="en">
@@ -471,14 +495,21 @@
                 <span class="zh">
                     KTA 穿梭巴士是由<strong>코리아나여행사（Koreana 旅行社）运营的穿梭巴士</strong>，直达连接纽约法拉盛、新泽西 Fort Lee 和 Palisades Park 等<strong>核心站点</strong>。저희는 <strong>准时准点发车</strong>，并始终保持车内干净整洁，确保您享受<strong>安全舒适的乘车体验</strong>。
                 </span>
+                </div>
             </div>
-        </div>
+
+            <!-- 오른쪽/아래: 완전히 분리된 독립 차량 사진 카드 -->
+            <div class="bus-image-card">
+                <img src="bus.png" alt="KTA Shuttle Bus" onerror="this.parentNode.style.display='none';">
+            </div>
+</div>
+
+
+
 
         <div class="route-map-card">
             <div class="route-map-title">
-                📍 <span class="ko">운행 노선 요약</span>
-                <span class="en">Route Overview</span>
-                <span class="zh">路线摘要</span>
+                📍 <span>운행노선/Route Overview/路线摘要</span>
             </div>
             <div class="route-visual">
                 <div class="route-node">
@@ -489,13 +520,13 @@
                 <div class="route-arrow arrow-1">➔</div>
                 <div class="route-node">
                     <div class="node-dot express"></div>
-                    <div class="node-name"><span class="ko">포트리</span><span class="en">Fort Lee</span><span class="zh">포트리</span></div>
+                    <div class="node-name"><span class="ko">포트리</span><span class="en">Fort Lee</span><span class="zh">李堡</span></div>
                     <div class="node-region">New Jersey</div>
                 </div>
                 <div class="route-arrow arrow-2">➔</div>
                 <div class="route-node">
                     <div class="node-dot"></div>
-                    <div class="node-name"><span class="ko">팰팍 (킹스파)</span><span class="en">Palisades Park</span><span class="zh">팰팍</span></div>
+                    <div class="node-name"><span class="ko">팰팍 (킹스파)</span><span class="en">Palisades Park</span><span class="zh">帕利塞茲公園</span></div>
                     <div class="node-region">New Jersey</div>
                 </div>
             </div>
@@ -504,57 +535,73 @@
         <div class="main-content">
             <div class="section-card">
                 <h2>⏱️ 
-                    <span class="ko">상세 경유지 및 시간표</span>
-                    <span class="en">Stops & Schedule</span>
-                    <span class="zh">停靠站与时间表</span>
+                    <span>Stops & Schedule</span>
+                    <!--span class="en">Stops & Schedule</span>
+                    <span class="zh">停靠站与时间表</span-->
                 </h2>
                 
                 <div class="tab-menu">
-                    <button class="tab-btn active" onclick="switchTab(event, 'ny-nj')">NY ➔ NJ (행)</button>
-                    <button class="tab-btn" onclick="switchTab(event, 'nj-ny')">NJ ➔ NY (행)</button>
+                    <button class="tab-btn active" onclick="switchTab(event, 'ny-nj')">NY ➔ NJ</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'nj-ny')">NJ ➔ NY</button>
                 </div>
 
                 <div id="ny-nj" class="tab-content active">
                     <div class="timeline">
                         <div class="timeline-item start">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">한양마트 (기점 출발)</span><span class="en">Hanyang Mart (Origin)</span><span class="zh">汉亚超市 (始发站)</span></div>
+                            <div class="timeline-text"><span class="ko">한양마트<a href="https://maps.app.goo.gl/vm19J8TherhxhKoj8" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Hanyang Mart / 汉亚超市</span></div>
                             <div class="timeline-sub">150-29 Northern Blvd</div>
                         </div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">147th St</div></div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">Bowne St</div></div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">Linden Pl</div></div>
+                        <!--div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">147th St</div></div-->
+                        <div class="timeline-item">
+							<div class="timeline-badge"></div>
+							<div class="timeline-text">Bowne St<a href="https://maps.app.goo.gl/iAD97SdwL8TCRjCSA" target="_blank" class="map-link map-blue">📍</a></div>
+							<div class="timeline-sub">Bowne St @ Northern Blvd</div>
+						</div>
+                        <div class="timeline-item">
+							<div class="timeline-badge"></div>
+							<div class="timeline-text">Linden Pl (Flushing Main St)<a href="https://maps.app.goo.gl/NzmhuzrFBF8jjRMv7" target="_blank" class="map-link map-blue">📍</a></div>
+							<div class="timeline-sub">Linden Pl @ Northern Blvd</div>
+						</div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">포트리 브릿지 플라자</span><span class="en">Fort Lee Bridge Plaza</span><span class="zh">Fort Lee Bridge Plaza</span></div>
-                            <div class="timeline-sub">185 Bridge Plz N</div>
+                            <div class="timeline-text"><span class="ko">포트리 브릿지 플라자<a href="https://maps.app.goo.gl/98eGfe33k6AS7Npa8" target="_blank" class="map-link">📍</a></span><span class="en">GWB / 乔治·华盛顿大桥</span></div>
+                            <div class="timeline-sub">Center Ave @ Bridge Plz N</div>
                         </div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">Fort Lee Main St & Linwood Ave</div></div>
+                        <div class="timeline-item">
+							<div class="timeline-badge"></div>
+							<div class="timeline-text"><span class="ko">포트리 메인스트리트<a href="https://maps.app.goo.gl/8F9M5zTfyGMX1CwVA" target="_blank" class="map-link">📍</a></span><span class="en">Fort Lee Main St / 李堡缅街</span></div>
+							<div class="timeline-sub">Linwood Ave @ Main St</div>
+						</div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">포트리 감미옥</span><span class="en">Fort Lee Gammeeok</span><span class="zh">포트리 감미옥</span></div>
+                            <div class="timeline-text"><span class="ko">포트리 감미옥<a href="https://maps.app.goo.gl/Znntct8XFDcuRB2A6" target="_blank" class="map-link">📍</a></span><span class="en">Fort Lee Gammeeok / 甘味屋</span></div>
                             <div class="timeline-sub">485 Main St</div>
                         </div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text"><span class="ko">한남마트</span><span class="en">Hannam Mart</span><span class="zh">한남마트</span></div></div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">Palisades Park 5th St</div></div>
+                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text"><span class="ko">한남마트<a href="https://maps.app.goo.gl/Ftbzntts44TPR2tB7" target="_blank" class="map-link">📍</a></span><span class="en">Hannam Mart</span><span class="zh">韓南超市</span></div></div>
+                        <div class="timeline-item">
+							<div class="timeline-badge"></div>
+							<div class="timeline-text"><span class="ko">팰팍 5가<a href="https://maps.app.goo.gl/xBk1adTz7M3hfKam7" target="_blank" class="map-link">📍</a></span><span class="en">Palisades Park Fifth St / 第五街</span></div>
+							<div class="timeline-sub">Fifth St @ E Palisades Blvd</div>
+						</div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">팰팍 4거리</span><span class="en">Broad Ave 4-Way</span><span class="zh">팰팍 4거리</span></div>
-                            <div class="timeline-sub">400 Broad Ave</div>
+                            <div class="timeline-text"><span class="ko">팰팍 4거리(United Healthcare)<a href="https://maps.app.goo.gl/RTcXCRitA55LURtp6" target="_blank" class="map-link">📍</a></span><span class="en">Broad Ave 4-Way / 帕利塞兹公园路口</span></div>
+                            <div class="timeline-sub">E Palisades Blvd @ Broad Ave</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">팰팍 경찰서</span><span class="en">Palisades Park Police Dept</span><span class="zh">팰팍 경찰서</span></div>
-                            <div class="timeline-sub">Central Blvd</div>
+                            <div class="timeline-text"><span class="ko">팰팍 경찰서<a href="https://maps.app.goo.gl/iigesEda5GzfZ46J9" target="_blank" class="map-link">📍</a></span><span class="en">Palisades Park Police Dept / 帕利塞茲公園警察局</span></div>
+                            <div class="timeline-sub">Central Blvd @ Broad Ave</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">신한은행</span><span class="en">Shinhan Bank</span><span class="zh">신한은행</span></div>
-                            <div class="timeline-sub">Edsall Ave</div>
+                            <div class="timeline-text"><span class="ko">신한은행<a href="https://maps.app.goo.gl/QDiNpfpmSyLQ1NsW7" target="_blank" class="map-link">📍</a></span><span class="en">Shinhan Bank / 新韩银行</span></div>
+                            <div class="timeline-sub">Edsall Ave @ Broad Ave</div>
                         </div>
                         <div class="timeline-item end">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">킹스파 (종점 행)</span><span class="en">King Sauna (Destination)</span><span class="zh">King Sauna (终点站)</span></div>
+                            <div class="timeline-text"><span class="ko">킹스파<a href="https://maps.app.goo.gl/v3eokHYPRWMNQnQZ9" target="_blank" class="map-link">📍</a></span><span class="en">King Sauna / 帝王桑拿</span></div>
                             <div class="timeline-sub">321 Commercial Ave</div>
                         </div>
                     </div>
@@ -580,36 +627,46 @@
                     <div class="timeline">
                         <div class="timeline-item start">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">킹스파 (기점 출발)</span><span class="en">King Sauna (Origin)</span><span class="zh">King Sauna (始发站)</span></div>
+                            <div class="timeline-text"><span class="ko">킹스파<a href="https://maps.app.goo.gl/v3eokHYPRWMNQnQZ9" target="_blank" class="map-link map-blue">📍</a></span><span class="en">King Sauna / 帝王桑拿</span></div>
                             <div class="timeline-sub">321 Commercial Ave</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">삼성택배</span><span class="en">Samsung Shipping</span><span class="zh">삼성택배</span></div>
-                            <div class="timeline-sub">117 Grand Ave</div>
+                            <div class="timeline-text"><span class="ko">아비코<a href="https://maps.app.goo.gl/YjHTrjre6bCpaPL49" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Abiko Curry / 阿比古咖喱</span></div>
+                            <div class="timeline-sub">108 Broad Ave / Edsall Ave @ Broad Ave</div>
                         </div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">아비코</span><span class="en">Abiko Curry</span><span class="zh">아비코</span></div>
-                            <div class="timeline-sub">108 Broad Ave</div>
+                            <div class="timeline-text"><span class="ko">제이씨델리<a href="https://maps.app.goo.gl/cff6GXG1aVWf3KWm7" target="_blank" class="map-link map-blue">📍</a></span><span class="en">JC Deli & Liquor / JC熟食酒舖</span></div>
+                            <div class="timeline-sub">246 Broad Ave / Brinkerhoff Ave @ Broad Ave</div>
                         </div>
+                        <div class="timeline-item"><div class="timeline-badge"></div>
+							<div class="timeline-text"><span class="ko">팰팍 4거리(United Healthcare)<a href="https://maps.app.goo.gl/8ADShVKuHdDYSnfZ7" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Broad Ave 4-Way / 帕利塞兹公园路口</span></div>
+							<div class="timeline-sub">350 Broad Ave / E Palisades Blvd @ Broad Ave</div>
+						</div>
+                        <div class="timeline-item">
+							<div class="timeline-badge"></div>
+							<div class="timeline-text"><span class="ko">팰팍 6가<a href="https://maps.app.goo.gl/A4JajvsxhSn81rFc7" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Palisades Park 6th St / 第六街</span></div>
+							<div class="timeline-sub">6th St @ E Palisades Blvd</div>
+						</div>
                         <div class="timeline-item">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">제이씨델리</span><span class="en">JC Deli</span><span class="zh">제이씨델리</span></div>
-                            <div class="timeline-sub">246 Broad Ave</div>
-                        </div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">United Healthcare</div><div class="timeline-sub">350 Broad Ave</div></div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">팰팍 6th St & Palisades Blvd</div></div>
-                        <div class="timeline-item">
-                            <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">포트리 감미옥</span><span class="en">Fort Lee Gammeeok</span><span class="zh">포트리 감미옥</span></div>
+                            <div class="timeline-text"><span class="ko">포트리 감미옥<a href="https://maps.app.goo.gl/e2JUy22wPhqDeAnw8" target="_blank" class="map-link map-blue">📍</a></span><span class="en">Fort Lee Gammeeok / 甘味屋</span></div>
                             <div class="timeline-sub">492 Main St</div>
                         </div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">Flushing Main St</div><div class="timeline-sub">137 Northern Blvd</div></div>
-                        <div class="timeline-item"><div class="timeline-badge"></div><div class="timeline-text">Flushing Bowne St</div></div>
+                        <div class="timeline-item">
+							<div class="timeline-badge"></div>
+							<div class="timeline-text"><span class="ko">Flushing Main St<a href="https://maps.app.goo.gl/CNUavZgYuDYyjgRt5" target="_blank" class="map-link">📍</a></span><span class="en">法拉盛缅街</span></div>
+							<div class="timeline-sub">137 Northern Blvd</div>
+						</div>
+                        <div class="timeline-item">
+							<div class="timeline-badge"></div>
+							<div class="timeline-text"><span class="ko">Flushing Bowne St<a href="https://maps.app.goo.gl/EFEkh1mXAz1WEapJ6" target="_blank" class="map-link">📍</a></span><span class="en">法拉盛宝恩街</span></div>
+							<div class="timeline-sub">Bowne St @ Northern Blvd</div>
+						</div>
                         <div class="timeline-item end">
                             <div class="timeline-badge"></div>
-                            <div class="timeline-text"><span class="ko">한양마트 (종점 행)</span><span class="en">Hanyang Mart (Destination)</span><span class="zh">汉亚超市 (终点站)</span></div>
+                            <div class="timeline-text"><span class="ko">한양마트<a href="https://maps.app.goo.gl/4TGkPpgtQ8FHL8gX9" target="_blank" class="map-link">📍</a></span><span class="en">Hanyang Mart / 汉亚超市</span></div>
                             <div class="timeline-sub">150 Northern Blvd</div>
                         </div>
                     </div>
@@ -637,64 +694,66 @@
             <div class="section-card">
                 <h2>💵 
                     <span class="ko">이용 요금</span>
-                    <span class="en">Bus Fares</span>
-                    <span class="zh">乘车票价</span>
+                    <span class="en">Bus Fares / 乘车票价</span>
                 </h2>
                 <div class="rate-list">
                     <div class="rate-item">
-                        <div class="rate-name"><span class="ko">일반 편도 (1회)</span><span class="en">One-Way Ticket</span><span class="zh">单程票 (1次)</span></div>
+                        <div class="rate-name"><span class="ko">일반 편도 (1회)</span><span class="en">One-Way Ticket / 单程票 (1次)</span></div>
                         <div class="rate-price">$15.00</div>
                     </div>
                     <div class="rate-item">
-                        <div class="rate-name"><span class="ko">할인 쿠폰 (10매)</span><span class="en">10-Ride Coupon</span><span class="zh">优惠套票 (10张)</span></div>
+                        <div class="rate-name"><span class="ko">할인 쿠폰 (10매)</span><span class="en">10-Ride Coupon / 优惠套票 (10张)</span></div>
                         <div class="rate-price">$120.00</div>
                     </div>
                     <div class="rate-item">
-                        <div class="rate-name"><span class="ko">월 정기권</span><span class="en">Monthly Pass</span><span class="zh">月度定期票</span></div>
+                        <div class="rate-name"><span class="ko">월 정기권</span><span class="en">Monthly Pass / 月度定期票</span></div>
                         <div class="rate-price">$350.00</div>
                     </div>
                 </div>
                 <div class="rate-notice">
-                    <p>* <span class="ko">본 버스는 현금(Cash Only) 및 쿠폰으로만 탑승 가능합니다.</span>
-                       <span class="en">* Cash or Coupon Only. Credit cards are not accepted.</span>
-                       <span class="zh">* 本巴士仅接受现金 or 乘车券，不支持信用卡。</span></p>
-                    <p>🧳 <span class="ko">여행 가방, 기내 반입 가방, 스포츠 토트백, 골프 가방은 위탁 수하물 1개로 간주됩니다. <strong>위탁 수하물 요금은 $15.00가 추가</strong>됩니다.</span>
-                       <span class="en">Suitcases, carry-on bags, sports tote bags, and golf bags are considered as 1 checked baggage item. <strong>An additional fee of $15.00</strong> applies per checked baggage.</span>
-                       <span class="zh">旅行箱、登机箱、运动手提包、高尔夫球包均视为1件托运行李。<strong>每件托运行李需额外支付 $15.00</strong>。</span></p>
+                    <p>
+                        <span class="ko">* 본 버스는 현금(Cash Only) 및 쿠폰으로만 탑승 가능합니다.</span>
+                        <span class="en">* Cash or Coupon Only. Credit cards are not accepted.</span>
+                        <span class="zh">* 本巴士仅接受现金 or 乘车券，不支持信用卡。</span>
+                    </p>
+                    <p>
+                        <span class="ko">🧳 여행 가방, 기내 반입 가방, 스포츠 토트백, 골프 가방은 위탁 수하물 1개로 간주됩니다. <strong>위탁 수하물 요금은 $15.00가 추가</strong>됩니다.</span>
+                        <span class="en">Please note that a travel bag, carry-on, sport tote bag, golf bag counts as one checked bag. It is subject to any checked bag fees extra $15.00</span>
+                        <span class="zh">请注意，旅行包、随身行李包、运动手提包、高尔夫球包均算作一件托运行李。 托运行李需额外支付 15 美元.</span>
+                    </p>
                 </div>
             </div>
 
             <div class="section-card">
-                <h2>📸 
-                    <span class="ko">원본 시간표 보기</span>
-                    <span class="en">Original Schedule Flyer</span>
-                    <span class="zh">查看原始时间表</span>
-                </h2>
-                <div class="paper-schedule-box">
-                    <a href="kta01.png" target="_blank" title="원본 이미지 크게 보기">
-                        <img src="kta01.png" alt="KTA BUS 종이 시간표 원본 파일" onerror="this.style.display='none';">
-                    </a>
-                    <div class="image-caption">
-                        <span class="ko">📸 전단지 이미지를 클릭하면 큰 화면으로 원본 확인 및 저자가 가능합니다.</span>
-                        <span class="en">📸 Click the flyer to view or save the high-res original sheet.</span>
-                        <span class="zh">📸 点击宣传单图片可在新窗口中查看或保存高清晰度原始版本。</span>
-                    </div>
-                </div>
+            <h2>📸
+				<span class="ko">운행 시간표 / Schedule</span>
+				<!--span class="en">Download Full Schedule</span>
+				<span class="zh">下载完整时刻表</span-->
+			</h2>
+
+				<div class="paper-schedule-box">
+					<a href="ktabus_schedule.png" target="_blank" title="원본 이미지 크게 보기">
+					<img src="ktabus_schedule.png" alt="KTA BUS Schedule" onerror="this.style.display='none';">
+					</a>
+					<!--div class="image-caption">
+						<span class="ko">📸 이미지를 길게 눌러 휴대폰에 저장하세요.</span>
+						<span class="en">📸 Long-press the image to save it to your phone.</span>
+						<span class="zh">📸 长按图片即可保存至手机。</span>
+					</div-->
+				</div>
             </div>
 
             <div class="section-card">
                 <h2>📞 
-                    <span class="ko">문의 및 연락처</span>
-                    <span class="en">Contact Info</span>
-                    <span class="zh">咨询与联系</span>
+                    <span class="ko">Contact Info</span>
                 </h2>
                 <div class="info-row">
-                    <div class="info-label"><span class="ko">문의 전화</span><span class="en">Phone</span><span class="zh">咨询电话</span></div>
+                    <div class="info-label">Phone</div>
                     <div class="info-value"><a href="tel:718-460-9400" class="btn-link">718-460-9400</a></div>
                 </div>
                 <div class="info-row">
-                    <div class="info-label"><span class="ko">웹사이트</span><span class="en">Website</span><span class="zh">官方网站</span></div>
-                    <div class="info-value">ktabus.com</div>
+                    <div class="info-label"><span class="ko">Email</span></div>
+                    <div class="info-value">info@ktabus.com</div>
                 </div>
             </div>
         </div>
@@ -706,6 +765,7 @@
     </footer>
 
     <script>
+        // 노선 방향 탭 스위칭 기능 유지 (언어 선택 기능은 불필요하므로 제거됨)
         function switchTab(event, tabId) {
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
@@ -714,18 +774,6 @@
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
-
-        function changeLanguage(langCode) {
-            document.body.setAttribute('data-lang', langCode);
-            document.getElementById('langSelect').value = langCode;
-        }
-
-        window.onload = function() {
-            const userLang = (navigator.language || navigator.userLanguage).toLowerCase().slice(0, 2);
-            if (userLang === 'zh') changeLanguage('zh'); 
-            else if (userLang === 'en') changeLanguage('en'); 
-            else changeLanguage('ko'); 
-        };
     </script>
 </body>
 </html>
