@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="refresh" content="3600">
     <title>픽업 상태 (당일 데이터 반영)</title>
     <style>
         body {
@@ -17,6 +18,18 @@
             margin: 5px 0 10px 0;
         }
         
+		.header-container {
+			display: flex;
+			justify-content: left;
+			align-items: center;
+			gap: 15px;
+			margin-bottom: 20px;
+		}
+
+		.header-container h1 {
+			margin: 0;
+		}
+
         /* 상단 범례 영역 */
         .legend {
             margin: 0 0 8px 0;
@@ -89,7 +102,10 @@
 </head>
 <body>
 
-    <h1>운행일지 수령 상태</h1>
+    <div class="header-container">
+		<h1>운행일지 수령 상태</h1>
+		<button onclick="location.reload()">🔄 새로고침</button>
+	</div>
 
     <div class="legend">
         <div class="legend-item"><span class="status-box status-unclaimed"></span> 미수령</div>
