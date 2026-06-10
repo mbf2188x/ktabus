@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>픽업 상태 (당일 데이터 반영)</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', dotum, sans-serif;
+            margin: 8px;
+            background-color: #f9f9f9;
+            font-size: 14px;
+        }
+        h1 {
+            color: #333;
+            font-size: 18px;
+            margin: 5px 0 10px 0;
+        }
+        
+        /* 상단 범례 영역 */
+        .legend {
+            margin: 0 0 8px 0;
+            padding: 4px 6px;
+            background: #fff;
+            border: 1px solid #ddd;
+            display: inline-block;
+            border-radius: 4px;
+        }
+        .legend-item {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 12px;
+            line-height: 1;
+        }
+        .legend-item .status-box {
+            display: inline-block;
+            width: 12px !important;
+            height: 12px !important;
+            margin-right: 3px;
+            vertical-align: middle;
+        }
+        
+        /* 테이블 스타일 및 너비 고정 */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 360px; 
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            table-layout: fixed; 
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 0;
+            text-align: center;
+            vertical-align: middle;
+            box-sizing: border-box;
+        }
+        
+        /* 열 너비 고정 */
+        th:nth-child(1), td:nth-child(1) { width: 60px; font-weight: bold; font-size: 13px; } 
+        th:nth-child(2), td:nth-child(2) { width: 45px; } 
+        th:nth-child(3), td:nth-child(3) { width: 45px; } 
+        th:nth-child(4), td:nth-child(4) { width: 45px; } 
+
+        th {
+            background-color: #f2f2f2;
+            font-size: 13px;
+            word-break: break-all; 
+        }
+
+        /* 표 내부 인디케이터 */
+        .status-box {
+            display: block;        
+            width: 22px !important;  
+            height: 22px !important; 
+            margin: 0 auto;        
+            border-radius: 4px;
+            box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
+        }
+        
+        /* 상태별 색상 */
+        .status-unclaimed { background-color: #ff4d4d; } /* 미수령 */
+        .status-claimed { background-color: #ffaa00; }   /* 수령 */
+        .status-completed { background-color: #2ece7d; } /* 완료 */
+        .status-na { background-color: #e0e0e0; }        /* NA */
+    </style>
+</head>
+<body>
+
+    <h1>수령 상태</h1>
+
+    <div class="legend">
+        <div class="legend-item"><span class="status-box status-unclaimed"></span> 미수령</div>
+        <div class="legend-item"><span class="status-box status-claimed"></span> 수령</div>
+        <div class="legend-item"><span class="status-box status-completed"></span> 완료</div>
+        <div class="legend-item"><span class="status-box status-na"></span> N/A</div>
+    </div>
+
+    <table id="status-table">
+        <thead>
+            <tr id="table-header"></tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <script>
+        const API_KEY = 'AIzaSyBk2OUkCZiYCeTdRip_MiA4dySl9dqr7T8'; 
+        const SPREADSHEET_ID = '1ZYunk_khS7YDDuSqR4TGfBIo54pXFEvczYj6nD5k7cg';
+        const RANGE = 'Sheet1!A1:Z4'; 
+
+        async function fetchSpreadsheetData() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 0) {
+                    renderTransposedTable(data.values);
+                } else {
+                    document.getElementById('table-body').innerHTML = '<tr><td colspan="4">데이터 오류</td></tr>';
+                }
+            } catch (error) {
+                console.error('API 오류:', error);
+            }
+        }
+
+        function renderTransposedTable(rows) {
+            const maxCols = Math.max(...rows.map(r => r.length));
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // 1. 헤더 생성
+            let headerHtml = '<th>날짜</th>';
+            const totalUsers = Math.min(rows.length, 4); 
+            for (let i = 1; i < totalUsers; i++) {
+                const name = rows[i][0] || `이름${i}`;
+                headerHtml += `<th>${name}</th>`;
+            }
+            document.getElementById('table-header').innerHTML = headerHtml;
+
+            // 2. 데이터 행 생성
+            let bodyHtml = '';
+
+            for (let colIdx = 1; colIdx < maxCols; colIdx++) {
+                const dateStr = rows[0][colIdx]; 
+                if (!dateStr || dateStr.trim() === '') continue;
+
+                let displayDate = dateStr;
+                const dateParts = dateStr.split('-');
+                if (dateParts.length === 3) {
+                    displayDate = `${dateParts[1]}/${dateParts[2]}`; 
+                }
+
+                let rowHtml = `<tr><td>${displayDate}</td>`;
+
+                const targetDate = new Date(dateStr);
+                targetDate.setHours(0, 0, 0, 0);
+
+                for (let rowIdx = 1; rowIdx < totalUsers; rowIdx++) {
+                    const cellValue = (rows[rowIdx] && rows[rowIdx][colIdx] !== undefined) 
+                                      ? rows[rowIdx][colIdx].toString().trim() 
+                                      : '';
+                    
+                    let statusClass = 'status-na';
+                    let titleText = 'NA';
+
+                    // [조건 수정 반영] 
+                    if (targetDate < today) {
+                        // 1. 과거 날짜 조건
+                        if (cellValue === '' || cellValue === '0') {
+                            statusClass = 'status-unclaimed';
+                            titleText = '미수령';
+                        } else if (cellValue === '1') {
+                            statusClass = 'status-claimed';
+                            titleText = '수령';
+                        } else if (cellValue === '2') {
+                            statusClass = 'status-completed';
+                            titleText = '완료';
+                        }
+                    } else if (targetDate.getTime() === today.getTime()) {
+                        // 2. 오늘 날짜 조건: 값이 "0"이 아니거나 비어있지 않으면 상태 업데이트
+                        if (cellValue === '1') {
+                            statusClass = 'status-claimed';
+                            titleText = '수령';
+                        } else if (cellValue === '2') {
+                            statusClass = 'status-completed';
+                            titleText = '완료';
+                        } else {
+                            // 값이 없거나 "0" 이면 당일이므로 NA로 유지
+                            statusClass = 'status-na';
+                            titleText = 'NA';
+                        }
+                    } else {
+                        // 3. 미래 날짜 조건
+                        statusClass = 'status-na';
+                        titleText = 'NA';
+                    }
+
+                    rowHtml += `<td><span class="status-box ${statusClass}" title="${titleText}"></span></td>`;
+                }
+
+                rowHtml += '</tr>';
+                bodyHtml += rowHtml;
+            }
+
+            document.getElementById('table-body').innerHTML = bodyHtml;
+        }
+
+        window.onload = fetchSpreadsheetData;
+    </script>
+</body>
+</html>
