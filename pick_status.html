@@ -145,8 +145,19 @@
 
         function renderTransposedTable(rows) {
             const maxCols = Math.max(...rows.map(r => r.length));
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+            //const today = new Date();
+            //today.setHours(0, 0, 0, 0);
+			// 1. 현재 시간을 미 동부(New York) 타임존 기준의 날짜 문자열(YYYY-MM-DD)로 변환합니다.
+			const nyDateStr = new Date().toLocaleDateString("en-US", {
+    			timeZone: "America/New_York",
+   	 			year: "numeric",
+    			month: "2-digit",
+    			day: "2-digit"
+			}); // 결과 예시: "06/10/2026"
+
+			// 2. 변환된 동부 표준시 날짜를 기반으로 오늘 날짜 객체를 생성합니다.
+			const today = new Date(nyDateStr);
+			today.setHours(0, 0, 0, 0); // 시간 정보를 00:00:00으로 초기화
 
             // 1. 헤더 생성
             let headerHtml = '<th>날짜</th>';
